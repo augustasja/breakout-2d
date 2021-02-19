@@ -9,12 +9,15 @@ public class Coin : MonoBehaviour
     // Vieno golden coin verte
     public int coinValue = 1;
 
+    public AudioClip sound;
+
     // Tikrinimas ar zaidejas paima coin ir updatina ui
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             ScoreManager.instance.ChangeScore(coinValue);
+            AudioSource.PlayClipAtPoint(sound, transform.position);
         }
     }
 }
