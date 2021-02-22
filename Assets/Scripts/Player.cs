@@ -27,7 +27,6 @@ public class Player : MonoBehaviour
         Move();
         Jump();
         OnGround();
-        BetterJump();
     }
 
     /// <summary>
@@ -35,9 +34,12 @@ public class Player : MonoBehaviour
     /// </summary>
     void Move()
     {
-        float xAxis = Input.GetAxisRaw("Horizontal"); // Horizontal movement (setting A - left or -1, D - right or 1, no input - 0)
-        float moveBy = xAxis * movingSpeed; // Calculating moving distance = movement axis * moving speed
-        rigidBody.velocity = new Vector2(moveBy, rigidBody.velocity.y); // Accessing rigibody velocity variable
+        // Horizontal movement (setting A - left or -1, D - right or 1, no input - 0)
+        float xAxis = Input.GetAxisRaw("Horizontal");
+        // Calculating moving distance = movement axis * moving speed
+        float moveBy = xAxis * movingSpeed; 
+        // Accessing rigibody velocity variable
+        rigidBody.velocity = new Vector2(moveBy, rigidBody.velocity.y); 
     }
 
     /// <summary>
@@ -45,7 +47,8 @@ public class Player : MonoBehaviour
     /// </summary>
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && (isGrounded || Time.time - lastTimeGrounded <= rememberGroundedFor))
+        if (Input.GetKeyDown(KeyCode.Space) &&
+            (isGrounded || Time.time - lastTimeGrounded <= rememberGroundedFor))
         {
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpingForce);
         }
@@ -56,7 +59,8 @@ public class Player : MonoBehaviour
     /// </summary>
     void OnGround()
     {
-        Collider2D colliders = Physics2D.OverlapCircle(isGroundedChecker.position, checkGroundRadius, groundLayer);
+        Collider2D colliders = Physics2D.OverlapCircle(isGroundedChecker.position, 
+            checkGroundRadius, groundLayer);
         if (colliders != null)
         {
             isGrounded = true;
@@ -68,18 +72,6 @@ public class Player : MonoBehaviour
                 lastTimeGrounded = Time.time;
             }
             isGrounded = false;
-        }
-    }
-
-    void BetterJump()
-    {
-        if (rigidBody.velocity.y < 0)
-        {
-            rigidBody.velocity += Vector2.up * Physics2D.gravity * (fallMultiplier - 1) * Time.deltaTime;
-        }
-        else if (rigidBody.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
-        {
-            rigidBody.velocity += Vector2.up * Physics2D.gravity * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
     }
 }

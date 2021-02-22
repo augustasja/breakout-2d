@@ -1,6 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using TMPro;
@@ -13,10 +13,15 @@ public class Box : MonoBehaviour
 
     private bool isTouched; // Bool for storing value if player has touched the box.
 
+    public float fadeOutTime = 1.0f; // Object fade out time
+
+    public SpriteRenderer spriteRenderer; // Sprite that will fade out
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -24,7 +29,7 @@ public class Box : MonoBehaviour
     {
         if (isTouched)
         {
-            StartCoroutine(Handle());
+            StartCoroutine(FadeOut(spriteRenderer));
         }
     }
 
@@ -36,8 +41,12 @@ public class Box : MonoBehaviour
     {
         if (collision.collider.name == "Player")
         {
-            UnityEngine.Debug.Log($"{collision.collider.name} touched {collision.otherCollider.name}");
-            text.text = $"{collision.collider.name} touched {collision.otherCollider.name}!";
+            Debug.Log($"{collision.collider.name} touched " +
+                $"{collision.otherCollider.name}");
+            Debug.Log($"{collision.otherCollider.name} " +
+                $"will self destruct in " +
+                $"${TimeSpan.FromSeconds(fadeOutTime)} seconds.");
+            text.text = $"{collision.collider.name} touched the box!";
             isTouched = true;
         }
     }
@@ -45,13 +54,20 @@ public class Box : MonoBehaviour
     /// <summary>
     /// Handling event for when the box is touched
     /// </summary>
+    /// <param name="sprite">SpriteRender obj, that will disappear</param>
     /// <returns></returns>
-    private IEnumerator Handle()
+    private IEnumerator FadeOut(SpriteRenderer sprite)
     {
-        isTouched = true;
-        yield return new WaitForSeconds(1.0f);
-        UnityEngine.Debug.Log($"Destroyed: {gameObject.name}");
-        Destroy(gameObject);
-        isTouched = false;
+        var tempColor = sprite.color;
+        while(tempColor.a > 0f)
+        {
+            tempColor.a -= 1f * Time.deltaTime / fadeOutTime;
+            sprite.color = tempColor;
+            if (tempColor.a <= 0f) tempColor.a = 0f;
+            yield return null;
+        }
+        Destroy(this.gameObject);
+        sprite.color = tempColor;
+
     }
 }

@@ -16,7 +16,7 @@ TagManager:
   - 
   - Ground
   - Lights
-  - 
+  - Background
   - 
   - 
   - 
@@ -44,4 +44,13 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Decorations
+    uniqueID: 1670150321
+    locked: 0
+  - name: Ground
+    uniqueID: 869423195
+    locked: 0
+  - name: UI
+    uniqueID: 3594799991
     locked: 0
