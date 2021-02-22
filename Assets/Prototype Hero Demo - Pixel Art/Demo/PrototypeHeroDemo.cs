@@ -133,7 +133,7 @@ public class PrototypeHeroDemo : MonoBehaviour {
     // These functions are called inside the animation files
     void AE_runStop()
     {
-        m_audioManager.PlaySound("RunStop");
+        //m_audioManager.PlaySound("RunStop");
         // Spawn Dust
         float dustXOffset = 0.6f;
         SpawnDustEffect(m_RunStopDust, dustXOffset);
@@ -141,19 +141,19 @@ public class PrototypeHeroDemo : MonoBehaviour {
 
     void AE_footstep()
     {
-        m_audioManager.PlaySound("Footstep");
+        //m_audioManager.PlaySound("Footstep");
     }
 
     void AE_Jump()
     {
-        m_audioManager.PlaySound("Jump");
+        //m_audioManager.PlaySound("Jump");
         // Spawn Dust
         SpawnDustEffect(m_JumpDust);
     }
 
     void AE_Landing()
     {
-        m_audioManager.PlaySound("Landing");
+        //m_audioManager.PlaySound("Landing");
         // Spawn Dust
         SpawnDustEffect(m_LandingDust);
     }
