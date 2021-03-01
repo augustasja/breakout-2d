@@ -22,6 +22,10 @@ public class PrototypeHeroDemo : MonoBehaviour {
     private bool                m_moving = false;
     private int                 m_facingDirection = 1;
     private float               m_disableMovementTimer = 0.0f;
+    private bool                m_inAir;
+    private float               m_scoreMultiplier = 1;
+
+    public ScoreManager scoreManager;
 
     // Use this for initialization
     void Start ()
@@ -95,13 +99,35 @@ public class PrototypeHeroDemo : MonoBehaviour {
 
         // -- Handle Animations --
         //Jump
-        if (Input.GetButtonDown("Jump") && m_grounded && m_disableMovementTimer < 0.0f)
+        if (Input.GetButtonDown("Jump"))
         {
-            m_animator.SetTrigger("Jump");
-            m_grounded = false;
-            m_animator.SetBool("Grounded", m_grounded);
-            m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
-            m_groundSensor.Disable(0.2f);
+            // Checking if player is grounded.
+            if (m_grounded && m_grounded && m_disableMovementTimer < 0.0f)
+            {
+                m_animator.SetTrigger("Jump");
+                m_grounded = false;
+                m_animator.SetBool("Grounded", m_grounded);
+                m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
+                m_groundSensor.Disable(0.2f);
+                m_inAir = true;
+            }
+            // Check if player is able to perform an extra jump for 1 "coin".
+            else if (m_inAir && scoreManager.score > 0)
+            {
+                // Burning score for an extra jump.
+                var scoreToBurn = 1;
+                scoreManager.score -= scoreToBurn;
+                Debug.Log($"Coins burned: {scoreToBurn}");
+                scoreManager.text.text = "x" + scoreManager.score.ToString();
+
+                // Performing jumping animations.
+                m_animator.SetTrigger("Jump");
+                m_grounded = false;
+                m_animator.SetBool("Grounded", m_grounded);
+                m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
+                m_groundSensor.Disable(0.2f);
+                m_inAir = true;
+            }
         }
 
         //Run
