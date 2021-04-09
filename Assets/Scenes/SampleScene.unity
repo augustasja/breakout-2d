@@ -31114,12 +31114,12 @@ PrefabInstance:
     - target: {fileID: 7216317338779392757, guid: e481822248898d04e9808a3d3ca78e5a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.38
+      value: -11.55
       objectReference: {fileID: 0}
     - target: {fileID: 7216317338779392757, guid: e481822248898d04e9808a3d3ca78e5a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.85
+      value: 5.14
       objectReference: {fileID: 0}
     - target: {fileID: 7216317338779392757, guid: e481822248898d04e9808a3d3ca78e5a,
         type: 3}
@@ -58262,6 +58262,9 @@ MonoBehaviour:
   isColided: 0
   open: {fileID: 21300012, guid: ae3918a914038694d852d0bb81f62473, type: 3}
   closed: {fileID: 21300010, guid: ae3918a914038694d852d0bb81f62473, type: 3}
+  chestSound: {fileID: 8300000, guid: 848f7b59bae26984fae633e68f87754c, type: 3}
+  coinSound: {fileID: 8300000, guid: ae0289837705ce941b8a2de9eecd97ca, type: 3}
+  reward: 5
 --- !u!61 &1774634422
 BoxCollider2D:
   m_ObjectHideFlags: 0
