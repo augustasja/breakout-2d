@@ -27,9 +27,14 @@ public class PrototypeHeroDemo : MonoBehaviour {
 
     public ScoreManager scoreManager;
 
+    // Interaktable svirtis
+    [SerializeField] GameObject interactIcon; // letter E
+    private Vector2 boxSize = new Vector2(0.1f,1f);
+
     // Use this for initialization
     void Start ()
     {
+        interactIcon.SetActive(false);
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
         m_audioSource = GetComponent<AudioSource>();
@@ -137,6 +142,10 @@ public class PrototypeHeroDemo : MonoBehaviour {
         //Idle
         else
             m_animator.SetInteger("AnimState", 0);
+        
+        // Tikriname ar paspaustas interaction mygtukas (E)
+        if(Input.GetKeyDown(KeyCode.E))
+            CheckInteraction();
     }
 
     // Function used to spawn a dust effect
@@ -191,6 +200,33 @@ public class PrototypeHeroDemo : MonoBehaviour {
         if (other.gameObject.CompareTag("GoldenCoin"))
         {
             Destroy(other.gameObject);
+        }
+    }
+
+    public void OpenInteractableIcon()
+    {
+        interactIcon.SetActive(true);
+    }
+
+    public void CloseInteractableIcon()
+    {
+        interactIcon.SetActive(false);
+    }
+
+    private void CheckInteraction()
+    {
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, boxSize, 0, Vector2.zero);
+        if (hits.Length > 0)
+        {
+            foreach (RaycastHit2D rc in hits)
+            {
+                if (rc.transform.GetComponent<Interactable>())
+                {
+                    rc.transform.GetComponent<Interactable>().Interact();
+                    rc.transform.GetComponent<Interactable>().isColided = true;
+                    return;
+                }
+            }
         }
     }
 }
