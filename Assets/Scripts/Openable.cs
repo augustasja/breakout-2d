@@ -14,13 +14,16 @@ public class Openable : Interactable
     public AudioClip coinSound;
 
     public int reward;
-
+    
     private void Start()
     {
         sr = GetComponent<SpriteRenderer>();
         sr.sprite = closed;
     }
 
+    /// <summary>
+    /// Interact metodas, kuris keicia skrynios sprite ir padaro ja atidaryta
+    /// </summary>
     public override void Interact()
     {
         if (isClosed)

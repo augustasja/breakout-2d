@@ -203,16 +203,26 @@ public class PrototypeHeroDemo : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Nustatoma interactable icon busena i true
+    /// </summary>
     public void OpenInteractableIcon()
     {
         interactIcon.SetActive(true);
     }
 
+    /// <summary>
+    /// Nustatoma interactable icon busena i false
+    /// </summary>
     public void CloseInteractableIcon()
     {
         interactIcon.SetActive(false);
     }
 
+    /// <summary>
+    /// Metodas tikrina ar Raycast ribose yra aptinkamas objektas
+    /// jei taip - interactinama su tuo objektu
+    /// </summary>
     private void CheckInteraction()
     {
         RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, boxSize, 0, Vector2.zero);
