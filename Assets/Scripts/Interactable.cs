@@ -15,6 +15,11 @@ public abstract class Interactable : MonoBehaviour
 
     public abstract void Interact();
 
+    /// <summary>
+    /// Metodas tikrina ar zaidejas yra netoli interactable objekto
+    /// jei taip - atisranda interactable icon
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (isColided != true)
@@ -24,6 +29,11 @@ public abstract class Interactable : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Metodas tikrina ar zaidejas isejo is interactable objekto ribu
+    /// jei taip - pranyksta interactable icon
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerExit2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))
