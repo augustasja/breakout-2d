@@ -25,6 +25,9 @@ public class PrototypeHeroDemo : MonoBehaviour {
     private bool                m_inAir;
     private float               m_scoreMultiplier = 1;
 
+
+    public ParticleSystem dust;
+
     public ScoreManager scoreManager;
 
     // Interaktable svirtis
@@ -40,6 +43,7 @@ public class PrototypeHeroDemo : MonoBehaviour {
         m_audioSource = GetComponent<AudioSource>();
         m_audioManager = AudioManager_PrototypeHero.instance;
         m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_Prototype>();
+        dust.Pause();
     }
 
     // Update is called once per frame
@@ -200,6 +204,24 @@ public class PrototypeHeroDemo : MonoBehaviour {
         if (other.gameObject.CompareTag("GoldenCoin"))
         {
             Destroy(other.gameObject);
+        }
+
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.tag == "Slippery Ground")
+        {
+            dust.Play();
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if(collision.collider.tag == "Slippery Ground")
+        {
+            dust.Pause();
         }
     }
 
