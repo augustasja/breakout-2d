@@ -8,6 +8,7 @@ public class Coin : MonoBehaviour
 
     public AudioClip Sound;
 
+
     // Tikrinimas ar zaidejas paima coin ir updatina ui
     private void OnTriggerEnter2D(Collider2D other)
     {

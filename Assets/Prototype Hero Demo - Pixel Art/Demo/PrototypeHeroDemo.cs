@@ -18,7 +18,7 @@ public class PrototypeHeroDemo : MonoBehaviour {
     private Sensor_Prototype    m_groundSensor;
     private AudioSource         m_audioSource;
     private AudioManager_PrototypeHero m_audioManager;
-    public AudioClip CoinSound;
+    public AudioManager _audioManager;
     private bool                m_grounded = false;
     private bool                m_moving = false;
     private int                 m_facingDirection = 1;
@@ -120,6 +120,7 @@ public class PrototypeHeroDemo : MonoBehaviour {
                 m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
                 m_groundSensor.Disable(0.2f);
                 m_inAir = true;
+                
             }
             // Check if player is able to perform an extra jump for 1 "coin".
             else if (m_inAir && scoreManager.Score > 0)
@@ -128,7 +129,6 @@ public class PrototypeHeroDemo : MonoBehaviour {
                 var scoreToBurn = 1;
                 scoreManager.ChangeScore(scoreToBurn, "-");
                 Debug.Log($"Coins burned: {scoreToBurn}");
-
                 // Performing jumping animations.
                 m_animator.SetTrigger("Jump");
                 m_grounded = false;
@@ -140,15 +140,19 @@ public class PrototypeHeroDemo : MonoBehaviour {
         }
 
         //Run
-        else if(m_moving)
+        else if (m_moving)
+        {
             m_animator.SetInteger("AnimState", 1);
+        }
+
 
         //Idle
         else
+        {
             m_animator.SetInteger("AnimState", 0);
-        
+        }
         // Tikriname ar paspaustas interaction mygtukas (E)
-        if(Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
             CheckInteraction();
     }
 
@@ -172,7 +176,7 @@ public class PrototypeHeroDemo : MonoBehaviour {
     // These functions are called inside the animation files
     void AE_runStop()
     {
-        //m_audioManager.PlaySound("RunStop");
+        AudioSource.PlayClipAtPoint(_audioManager.FootStep2, transform.position);
         // Spawn Dust
         float dustXOffset = 0.6f;
         SpawnDustEffect(m_RunStopDust, dustXOffset);
@@ -180,19 +184,19 @@ public class PrototypeHeroDemo : MonoBehaviour {
 
     void AE_footstep()
     {
-        //m_audioManager.PlaySound("Footstep");
+        AudioSource.PlayClipAtPoint(_audioManager.FootStep1, transform.position);
     }
 
     void AE_Jump()
     {
-        //m_audioManager.PlaySound("Jump");
+        AudioSource.PlayClipAtPoint(_audioManager.Jump, transform.position);
         // Spawn Dust
         SpawnDustEffect(m_JumpDust);
     }
 
     void AE_Landing()
     {
-        //m_audioManager.PlaySound("Landing");
+        AudioSource.PlayClipAtPoint(_audioManager.Land, transform.position);
         // Spawn Dust
         SpawnDustEffect(m_LandingDust);
     }
@@ -202,7 +206,7 @@ public class PrototypeHeroDemo : MonoBehaviour {
         // Naikina paimta coin
         if (other.gameObject.CompareTag("GoldenCoin"))
         {
-            AudioSource.PlayClipAtPoint(CoinSound, transform.position);
+            AudioSource.PlayClipAtPoint(_audioManager.Coin, transform.position);
             Destroy(other.gameObject);
         }
     }

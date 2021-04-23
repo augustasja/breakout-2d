@@ -11,6 +11,8 @@ public class ScoreManager : MonoBehaviour
 
     public ParticleSystem ParticleSystem;
 
+    private int _totalScore = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,9 +30,14 @@ public class ScoreManager : MonoBehaviour
         ParticleSystem.Play();
 
         if (operation == "+")
+        {
             Score += coinValue;
+            _totalScore += coinValue;
+        }
         else if (operation == "-")
+        {
             Score -= coinValue;
+        }
 
         Text.text = "x" + Score.ToString();
     }
