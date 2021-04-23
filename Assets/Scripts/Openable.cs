@@ -4,21 +4,22 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Openable : Interactable
 {
-    public Sprite open;
-    public Sprite closed;
+    public Sprite Open;
+    public Sprite Closed;
 
-    private SpriteRenderer sr;
-    private bool isClosed = true;
+    private SpriteRenderer _spriteRenderer;
+    private bool _isClosed = true;
 
-    public AudioClip chestSound;
-    public AudioClip coinSound;
+    public AudioClip ChestSound;
+    public AudioClip CoinSound;
 
-    public int reward;
+    public int Reward;
+    public ScoreManager ScoreManager;
     
     private void Start()
     {
-        sr = GetComponent<SpriteRenderer>();
-        sr.sprite = closed;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer.sprite = Closed;
     }
 
     /// <summary>
@@ -26,14 +27,14 @@ public class Openable : Interactable
     /// </summary>
     public override void Interact()
     {
-        if (isClosed)
+        if (_isClosed)
         {
-            sr.sprite = open;
-            isClosed = !isClosed;
+            _spriteRenderer.sprite = Open;
+            _isClosed = !_isClosed;
 
-            StartCoroutine(PlaySoundWithDelay(0f, chestSound));
-            StartCoroutine(PlaySoundWithDelay(1.5f, coinSound));
-            ScoreManager.instance.ChangeScore(reward);
+            StartCoroutine(PlaySoundWithDelay(0f, ChestSound));
+            StartCoroutine(PlaySoundWithDelay(1.5f, CoinSound));
+            ScoreManager.ChangeScore(Reward, "+");
         }
     }
 

@@ -6736,7 +6736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68a05f7997087d747b66d4a3a358188e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuMusic: {fileID: 8300000, guid: 90abe81415d4a3543ae16c4a974e040a, type: 3}
+  MenuMusic: {fileID: 0}
 --- !u!4 &287587022 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000186516280790, guid: 2e158dd1922dd2f429687179bedb7503,
@@ -6836,12 +6836,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44cd65ca3701b8444a715da7257a0908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isColided: 0
-  open: {fileID: 21300012, guid: ae3918a914038694d852d0bb81f62473, type: 3}
-  closed: {fileID: 21300010, guid: ae3918a914038694d852d0bb81f62473, type: 3}
-  chestSound: {fileID: 8300000, guid: 848f7b59bae26984fae633e68f87754c, type: 3}
-  coinSound: {fileID: 8300000, guid: ae0289837705ce941b8a2de9eecd97ca, type: 3}
-  reward: 5
+  Colided: 0
+  Open: {fileID: 21300012, guid: ae3918a914038694d852d0bb81f62473, type: 3}
+  Closed: {fileID: 21300010, guid: ae3918a914038694d852d0bb81f62473, type: 3}
+  ChestSound: {fileID: 8300000, guid: 848f7b59bae26984fae633e68f87754c, type: 3}
+  CoinSound: {fileID: 8300000, guid: ae0289837705ce941b8a2de9eecd97ca, type: 3}
+  Reward: 7
+  ScoreManager: {fileID: 850885033}
 --- !u!61 &302166706
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21963,8 +21964,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef0870eac200e4c48be3fa7575ad8a27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 362036153}
-  distance: 50
+  Player: {fileID: 362036153}
+  Distance: 50
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -22264,10 +22265,10 @@ GameObject:
   m_Component:
   - component: {fileID: 673562583}
   - component: {fileID: 673562578}
-  - component: {fileID: 673562577}
   - component: {fileID: 673562580}
   - component: {fileID: 673562582}
   - component: {fileID: 673562581}
+  - component: {fileID: 673562577}
   m_Layer: 0
   m_Name: Box
   m_TagString: Untagged
@@ -22275,8 +22276,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &673562577
-BoxCollider2D:
+--- !u!68 &673562577
+EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -22288,19 +22289,20 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.022745967, y: 0.022746027}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.95543504, y: 0.95543563}
+  m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.23958333, y: 0}
+  - {x: -0.23958325, y: 0}
+  - {x: -0.22240496, y: 0.15022969}
+  - {x: -0.10817051, y: 0.2685938}
+  - {x: 0.111474514, y: 0.27129436}
+  - {x: 0.23589611, y: 0.0725348}
+  - {x: 0.23673725, y: -0.09191036}
+  - {x: 0.13717842, y: -0.27114964}
+  - {x: -0.10443306, y: -0.27557325}
+  - {x: -0.2016809, y: -0.18404579}
+  - {x: -0.24764745, y: 0.028421879}
 --- !u!212 &673562578
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -22340,8 +22342,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1041382322464871745, guid: 0b1e36aec63883a4aaec5b71dc3c25a1,
-    type: 3}
+  m_Sprite: {fileID: 21300020, guid: ae3918a914038694d852d0bb81f62473, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -22393,9 +22394,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77924150e47c7994b8c78fb7af59db78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 257364715}
-  fadeOutTime: 3
-  spriteRenderer: {fileID: 673562578}
+  Text: {fileID: 257364715}
+  FadeOutTime: 10
+  SpriteRenderer: {fileID: 673562578}
 --- !u!224 &673562583
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22414,8 +22415,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.2407737, y: -2.1618998}
-  m_SizeDelta: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 5.053, y: -2.253}
+  m_SizeDelta: {x: 0.6244097, y: 0.76098704}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &676176942
 GameObject:
@@ -27583,9 +27584,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f3afe50c86020a47a72c7a5ded11d03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 147090006}
-  score: 0
-  particleSystem: {fileID: 1635916887}
+  Text: {fileID: 147090006}
+  Score: 0
+  ParticleSystem: {fileID: 1635916887}
 --- !u!4 &850885034
 Transform:
   m_ObjectHideFlags: 0
@@ -37632,6 +37633,11 @@ PrefabInstance:
       propertyPath: dust
       value: 
       objectReference: {fileID: 1522785121}
+    - target: {fileID: 5779919143759674799, guid: e481822248898d04e9808a3d3ca78e5a,
+        type: 3}
+      propertyPath: CoinSound
+      value: 
+      objectReference: {fileID: 8300000, guid: ae0289837705ce941b8a2de9eecd97ca, type: 3}
     - target: {fileID: 5779919143759674799, guid: e481822248898d04e9808a3d3ca78e5a,
         type: 3}
       propertyPath: m_maxSpeed
@@ -80578,12 +80584,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44cd65ca3701b8444a715da7257a0908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isColided: 0
-  open: {fileID: 21300012, guid: ae3918a914038694d852d0bb81f62473, type: 3}
-  closed: {fileID: 21300010, guid: ae3918a914038694d852d0bb81f62473, type: 3}
-  chestSound: {fileID: 8300000, guid: 848f7b59bae26984fae633e68f87754c, type: 3}
-  coinSound: {fileID: 8300000, guid: ae0289837705ce941b8a2de9eecd97ca, type: 3}
-  reward: 5
+  Colided: 0
+  Open: {fileID: 21300012, guid: ae3918a914038694d852d0bb81f62473, type: 3}
+  Closed: {fileID: 21300010, guid: ae3918a914038694d852d0bb81f62473, type: 3}
+  ChestSound: {fileID: 8300000, guid: 848f7b59bae26984fae633e68f87754c, type: 3}
+  CoinSound: {fileID: 8300000, guid: ae0289837705ce941b8a2de9eecd97ca, type: 3}
+  Reward: 5
+  ScoreManager: {fileID: 0}
 --- !u!61 &1774634422
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -107113,40 +107120,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dea0a9387f48f874eb7057928b9c37f9, type: 3}
---- !u!1 &1824524126 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1888605178837268, guid: 72fbaef77546dd1498e07955db8bc4b3,
-    type: 3}
-  m_PrefabInstance: {fileID: 48316454}
-  m_PrefabAsset: {fileID: 0}
---- !u!68 &1824524127
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1824524126}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: 0.0042975023, y: 0.59738916}
-  - {x: 0.24781616, y: 0.31618935}
-  - {x: 0.22777316, y: -0.3419623}
-  - {x: 0.30115703, y: -0.34572217}
-  - {x: 0.30653194, y: -0.48568147}
-  - {x: 0.24947241, y: -0.58608997}
-  - {x: -0.2559373, y: -0.57236636}
-  - {x: -0.30576026, y: -0.49946362}
-  - {x: -0.29790002, y: -0.34723747}
-  - {x: -0.19054419, y: -0.34509128}
-  - {x: -0.22282974, y: 0.3172649}
-  - {x: 0.0002284646, y: 0.5928633}
 --- !u!4 &1841410079 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2027885230959118596, guid: dea0a9387f48f874eb7057928b9c37f9,

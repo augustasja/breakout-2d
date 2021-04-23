@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class Interactable : MonoBehaviour
 {
-    public bool isColided = false;
+    public bool Colided = false;
+
     private void Reset()
     {
         GetComponent<BoxCollider2D>().isTrigger = true;
@@ -22,9 +19,9 @@ public abstract class Interactable : MonoBehaviour
     /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isColided != true)
+        if (Colided != true)
         {
-            if(collision.CompareTag("Player"))
+            if (collision.CompareTag("Player"))
                 collision.GetComponent<PrototypeHeroDemo>().OpenInteractableIcon();
         }
     }
@@ -36,7 +33,7 @@ public abstract class Interactable : MonoBehaviour
     /// <param name="collision"></param>
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
             collision.GetComponent<PrototypeHeroDemo>().CloseInteractableIcon();
     }
 }

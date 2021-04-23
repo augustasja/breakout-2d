@@ -1,41 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
-using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
-    public static ScoreManager instance;
+    public static ScoreManager Instance;
 
-    public TextMeshProUGUI text;
+    public TextMeshProUGUI Text;
 
-    public int score = 0;
+    public int Score = 0;
 
-    public ParticleSystem particleSystem;
+    public ParticleSystem ParticleSystem;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            particleSystem.GetComponent<ParticleSystem>();
-            instance = this;
+            ParticleSystem.GetComponent<ParticleSystem>();
+            Instance = this;
         }
-        
+
     }
 
     // Updatinamas tekstas kai paimamas coin
-    public void ChangeScore(int coinValue)
+    public void ChangeScore(int coinValue, string operation)
     {
-        particleSystem.Play();
-        score += coinValue;
-        text.text = "x" + score.ToString();
-    }
+        ParticleSystem.Play();
 
-    public void MinusScore(int coinValue)
-    {
-        score -= coinValue;
-        text.text = "x" + score.ToString();
-    }
+        if (operation == "+")
+            Score += coinValue;
+        else if (operation == "-")
+            Score -= coinValue;
 
+        Text.text = "x" + Score.ToString();
+    }
 }

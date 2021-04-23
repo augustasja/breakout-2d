@@ -18,6 +18,7 @@ public class PrototypeHeroDemo : MonoBehaviour {
     private Sensor_Prototype    m_groundSensor;
     private AudioSource         m_audioSource;
     private AudioManager_PrototypeHero m_audioManager;
+    public AudioClip CoinSound;
     private bool                m_grounded = false;
     private bool                m_moving = false;
     private int                 m_facingDirection = 1;
@@ -121,13 +122,12 @@ public class PrototypeHeroDemo : MonoBehaviour {
                 m_inAir = true;
             }
             // Check if player is able to perform an extra jump for 1 "coin".
-            else if (m_inAir && scoreManager.score > 0)
+            else if (m_inAir && scoreManager.Score > 0)
             {
                 // Burning score for an extra jump.
                 var scoreToBurn = 1;
-                scoreManager.score -= scoreToBurn;
+                scoreManager.ChangeScore(scoreToBurn, "-");
                 Debug.Log($"Coins burned: {scoreToBurn}");
-                scoreManager.text.text = "x" + scoreManager.score.ToString();
 
                 // Performing jumping animations.
                 m_animator.SetTrigger("Jump");
@@ -199,14 +199,12 @@ public class PrototypeHeroDemo : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
         // Naikina paimta coin
         if (other.gameObject.CompareTag("GoldenCoin"))
         {
+            AudioSource.PlayClipAtPoint(CoinSound, transform.position);
             Destroy(other.gameObject);
         }
-
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -255,7 +253,7 @@ public class PrototypeHeroDemo : MonoBehaviour {
                 if (rc.transform.GetComponent<Interactable>())
                 {
                     rc.transform.GetComponent<Interactable>().Interact();
-                    rc.transform.GetComponent<Interactable>().isColided = true;
+                    rc.transform.GetComponent<Interactable>().Colided = true;
                     return;
                 }
             }

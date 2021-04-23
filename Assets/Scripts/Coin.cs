@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
+﻿using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
     // Vieno golden coin verte
-    public int coinValue = 1;
+    [Range(0, 20)]
+    public int CoinValue = 1;
 
-    public AudioClip sound;
+    public AudioClip Sound;
 
     // Tikrinimas ar zaidejas paima coin ir updatina ui
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            ScoreManager.instance.ChangeScore(coinValue);
-            AudioSource.PlayClipAtPoint(sound, transform.position);
+            ScoreManager.Instance.ChangeScore(CoinValue, "+");
+            AudioSource.PlayClipAtPoint(Sound, transform.position);
         }
     }
 }
