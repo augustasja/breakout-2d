@@ -8,6 +8,8 @@ TagManager:
   - Torch
   - Slippery Ground
   - Health
+  - Lever
+  - ClosedDoor
   layers:
   - Default
   - TransparentFX

@@ -35,6 +35,9 @@ public class Openable : Interactable
             StartCoroutine(PlaySoundWithDelay(0f, ChestSound));
             StartCoroutine(PlaySoundWithDelay(1.5f, CoinSound));
             ScoreManager.ChangeScore(Reward, "+");
+            
+            
+            
         }
     }
 

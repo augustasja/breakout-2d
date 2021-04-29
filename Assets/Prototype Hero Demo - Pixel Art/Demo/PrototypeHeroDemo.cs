@@ -12,7 +12,7 @@ public class PrototypeHeroDemo : MonoBehaviour {
     [SerializeField] GameObject m_RunStopDust;
     [SerializeField] GameObject m_JumpDust;
     [SerializeField] GameObject m_LandingDust;
-
+    
     private Animator            m_animator;
     private Rigidbody2D         m_body2d;
     private Sensor_Prototype    m_groundSensor;
@@ -260,6 +260,7 @@ public class PrototypeHeroDemo : MonoBehaviour {
                     rc.transform.GetComponent<Interactable>().Colided = true;
                     return;
                 }
+
             }
         }
     }
