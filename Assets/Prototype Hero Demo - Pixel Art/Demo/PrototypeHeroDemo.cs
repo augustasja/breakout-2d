@@ -31,6 +31,9 @@ public class PrototypeHeroDemo : MonoBehaviour {
 
     public ScoreManager scoreManager;
 
+    public Pause pauseManager;
+
+
     // Interaktable svirtis
     [SerializeField] GameObject interactIcon; // letter E
     private Vector2 boxSize = new Vector2(0.1f,1f);
@@ -104,7 +107,7 @@ public class PrototypeHeroDemo : MonoBehaviour {
         m_animator.SetFloat("AirSpeedY", m_body2d.velocity.y);
 
         // Set Animation layer for hiding sword
-        int boolInt = m_hideSword ? 1 : 0;
+        int boolInt = m_hideSword ? 0 : 1;
         m_animator.SetLayerWeight(1, boolInt);
 
         // -- Handle Animations --
@@ -120,7 +123,7 @@ public class PrototypeHeroDemo : MonoBehaviour {
                 m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
                 m_groundSensor.Disable(0.2f);
                 m_inAir = true;
-                
+
             }
             // Check if player is able to perform an extra jump for 1 "coin".
             else if (m_inAir && scoreManager.Score > 0)
@@ -144,7 +147,6 @@ public class PrototypeHeroDemo : MonoBehaviour {
         {
             m_animator.SetInteger("AnimState", 1);
         }
-
 
         //Idle
         else
