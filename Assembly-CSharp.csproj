@@ -64,6 +64,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Bandits - Pixel Art\Demo\Bandit.cs" />
+    <Compile Include="Assets\Bandits - Pixel Art\Demo\Sensor_Bandit.cs" />
     <Compile Include="Assets\Prototype Hero Demo - Pixel Art\Demo\AudioManager_PrototypeHero.cs" />
     <Compile Include="Assets\Prototype Hero Demo - Pixel Art\Demo\Dust_DestroyEvent.cs" />
     <Compile Include="Assets\Prototype Hero Demo - Pixel Art\Demo\PrototypeHeroDemo.cs" />
