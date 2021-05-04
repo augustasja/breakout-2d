@@ -1,14 +1,13 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class LeverDown : Interactable
 {
-    
+
     public Sprite Up;
     public Sprite Down;
-    
+
     private SpriteRenderer _spriteRenderer;
     private SpriteRenderer _doorSprite;
     private GameObject openDoor;
@@ -19,7 +18,7 @@ public class LeverDown : Interactable
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _doorSprite = GameObject.Find("ClosedDoor").GetComponent<SpriteRenderer>(); 
+        _doorSprite = GameObject.Find("ClosedDoor").GetComponent<SpriteRenderer>();
         openDoor = GameObject.Find("ClosedDoor");
         _spriteRenderer.sprite = Up;
     }

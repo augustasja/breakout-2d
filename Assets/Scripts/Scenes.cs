@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public static class Scenes
@@ -19,7 +17,7 @@ public static class Scenes
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
-    
+
     public static void Exit()
     {
 #if UNITY_EDITOR

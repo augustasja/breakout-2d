@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class Interactable : MonoBehaviour
@@ -12,7 +11,7 @@ public abstract class Interactable : MonoBehaviour
     }
 
     public abstract void Interact();
-    
+
 
     /// <summary>
     /// Metodas tikrina ar zaidejas yra netoli interactable objekto

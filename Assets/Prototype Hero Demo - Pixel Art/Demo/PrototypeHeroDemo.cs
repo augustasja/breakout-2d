@@ -1,30 +1,29 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 
-public class PrototypeHeroDemo : MonoBehaviour {
+public class PrototypeHeroDemo : MonoBehaviour
+{
 
     [Header("Variables")]
-    [SerializeField] float      m_maxSpeed = 4.5f;
-    [SerializeField] float      m_jumpForce = 7.5f;
-    [SerializeField] bool       m_hideSword = false;
+    [SerializeField] float m_maxSpeed = 4.5f;
+    [SerializeField] float m_jumpForce = 7.5f;
+    [SerializeField] bool m_hideSword = false;
     [Header("Effects")]
     [SerializeField] GameObject m_RunStopDust;
     [SerializeField] GameObject m_JumpDust;
     [SerializeField] GameObject m_LandingDust;
-    
-    private Animator            m_animator;
-    private Rigidbody2D         m_body2d;
-    private Sensor_Prototype    m_groundSensor;
-    private AudioSource         m_audioSource;
+
+    private Animator m_animator;
+    private Rigidbody2D m_body2d;
+    private Sensor_Prototype m_groundSensor;
+    private AudioSource m_audioSource;
     private AudioManager_PrototypeHero m_audioManager;
     public AudioManager _audioManager;
-    private bool                m_grounded = false;
-    private bool                m_moving = false;
-    private int                 m_facingDirection = 1;
-    private float               m_disableMovementTimer = 0.0f;
-    private bool                m_inAir;
-    private float               m_scoreMultiplier = 1;
+    private bool m_grounded = false;
+    private bool m_moving = false;
+    private int m_facingDirection = 1;
+    private float m_disableMovementTimer = 0.0f;
+    private bool m_inAir;
+    private float m_scoreMultiplier = 1;
 
 
     public ParticleSystem dust;
@@ -35,10 +34,10 @@ public class PrototypeHeroDemo : MonoBehaviour {
 
     // Interaktable svirtis
     [SerializeField] GameObject interactIcon; // letter E
-    private Vector2 boxSize = new Vector2(0.1f,1f);
+    private Vector2 boxSize = new Vector2(0.1f, 1f);
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         interactIcon.SetActive(false);
         m_animator = GetComponent<Animator>();
@@ -50,7 +49,7 @@ public class PrototypeHeroDemo : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
         // Decrease timer that disables input movement. Used when attacking
         m_disableMovementTimer -= Time.deltaTime;
@@ -90,13 +89,13 @@ public class PrototypeHeroDemo : MonoBehaviour {
             GetComponent<SpriteRenderer>().flipX = false;
             m_facingDirection = 1;
         }
-            
+
         else if (inputRaw < 0)
         {
             GetComponent<SpriteRenderer>().flipX = true;
             m_facingDirection = -1;
         }
-     
+
         // SlowDownSpeed helps decelerate the characters when stopping
         float SlowDownSpeed = m_moving ? 1.0f : 0.5f;
         // Set movement
@@ -222,7 +221,7 @@ public class PrototypeHeroDemo : MonoBehaviour {
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if(collision.collider.tag == "Slippery Ground")
+        if (collision.collider.tag == "Slippery Ground")
         {
             dust.Pause();
         }

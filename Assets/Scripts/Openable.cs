@@ -15,7 +15,7 @@ public class Openable : Interactable
 
     public int Reward;
     public ScoreManager ScoreManager;
-    
+
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -35,9 +35,9 @@ public class Openable : Interactable
             StartCoroutine(PlaySoundWithDelay(0f, ChestSound));
             StartCoroutine(PlaySoundWithDelay(1.5f, CoinSound));
             ScoreManager.ChangeScore(Reward, "+");
-            
-            
-            
+
+
+
         }
     }
 

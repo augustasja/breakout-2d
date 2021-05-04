@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class Door : Interactable
@@ -11,13 +8,13 @@ public class Door : Interactable
 
     public bool openedDoors;
     private SpriteRenderer _spriteRenderer;
-    
+
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.sprite = Closed;
     }
-    
+
     public override void Interact()
     {
         if (openedDoors)

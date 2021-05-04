@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Slip : MonoBehaviour
 {
@@ -24,7 +22,7 @@ public class Slip : MonoBehaviour
             var x = Input.GetAxis("Horizontal");
             var y = Input.GetAxis("Vetical");
             var vector = new Vector2(x, y);
-            collision.gameObject.GetComponent<Rigidbody2D>().velocity = 
+            collision.gameObject.GetComponent<Rigidbody2D>().velocity =
                 vector * 5000f * Time.deltaTime;
             dust.Play();
         }

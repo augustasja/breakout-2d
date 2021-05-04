@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GamePlayCanvas : MonoBehaviour
 {
@@ -47,6 +44,7 @@ public class GamePlayCanvas : MonoBehaviour
     {
         Scenes.Hide(pausedMenu);
         Scenes.Show(gameOverMenu);
+        Debug.Log("Game Over.");
     }
 
     public void ResumeGame()
@@ -98,12 +96,12 @@ public class GamePlayCanvas : MonoBehaviour
         return pausedMenu.gameObject.activeInHierarchy;
     }
 
-    private static void UpdateChildCount(Transform container, 
+    private static void UpdateChildCount(Transform container,
         GameObject prefab, int newCount)
     {
         var childCount = container.childCount;
         var change = Mathf.Min(Mathf.Abs(childCount - newCount), childCount);
-        if(childCount < newCount)
+        if (childCount < newCount)
         {
             AddChildren(container, prefab, change);
         }

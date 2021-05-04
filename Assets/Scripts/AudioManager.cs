@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -18,6 +16,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip FootStep2;
     public AudioClip Jump;
     public AudioClip Land;
+    public AudioClip Sword;
+    public AudioClip Death;
 
     AudioSource[] audioSources;
 
@@ -34,7 +34,8 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(AudioClip clip, Vector2 position)
     {
-        AudioSource.PlayClipAtPoint(clip, position, effectsVolume = masterVolume);
+        AudioSource.PlayClipAtPoint(clip, position,
+            effectsVolume = masterVolume);
     }
 
     internal void SetVolume(float x, object master)

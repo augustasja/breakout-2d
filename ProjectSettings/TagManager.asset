@@ -11,6 +11,8 @@ TagManager:
   - Lever
   - ClosedDoor
   - Collectibles
+  - Box
+  - Enemy
   layers:
   - Default
   - TransparentFX
