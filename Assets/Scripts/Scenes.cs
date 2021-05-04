@@ -3,30 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Scenes : MonoBehaviour
+public static class Scenes
 {
-    public void RestartScene()
+    public static void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void LoadNextScene()
+    public static void LoadNextScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    public void LoadPreviousScene()
+    public static void LoadPreviousScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
     
-    public void Exit()
+    public static void Exit()
     {
-        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        
+#endif
     }
 
-    private void LoadScene(int index)
+    private static void LoadScene(int index)
     {
         SceneManager.LoadScene(index);
+    }
+
+    public static void Show(Component component)
+    {
+        component.gameObject.SetActive(true);
+    }
+
+    public static void Hide(Component component)
+    {
+        component.gameObject.SetActive(false);
     }
 }

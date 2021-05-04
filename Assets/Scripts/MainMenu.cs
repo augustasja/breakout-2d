@@ -7,14 +7,37 @@ using UnityEngine.Audio;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField]
+    private RectTransform mainMenu;
+
+    [SerializeField]
+    private RectTransform optionsMenu;
+
+    private void Start()
+    {
+        ShowMainMenu();
+    }
+
     public void Play()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Scenes.LoadNextScene();
     }
 
     public void Quit()
     {
         Debug.Log("Quit");
-        Application.Quit();
+        Scenes.Exit();
+    }
+
+    public void ShowMainMenu()
+    {
+        Scenes.Show(mainMenu);
+        Scenes.Hide(optionsMenu);
+    }
+
+    public void ShowOptionsMenu()
+    {
+        Scenes.Show(optionsMenu);
+        Scenes.Hide(mainMenu);
     }
 }

@@ -10,6 +10,7 @@ TagManager:
   - Health
   - Lever
   - ClosedDoor
+  - Collectibles
   layers:
   - Default
   - TransparentFX

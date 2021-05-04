@@ -11,7 +11,9 @@ public class ScoreManager : MonoBehaviour
 
     public ParticleSystem ParticleSystem;
 
-    private int _totalScore = 0;
+    public int totalScore = 0;
+
+    public TextMeshProUGUI highScore;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +34,8 @@ public class ScoreManager : MonoBehaviour
         if (operation == "+")
         {
             Score += coinValue;
-            _totalScore += coinValue;
+            totalScore += coinValue;
+            highScore.text = "High Score " + totalScore;
         }
         else if (operation == "-")
         {

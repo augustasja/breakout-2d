@@ -31,7 +31,6 @@ public class PrototypeHeroDemo : MonoBehaviour {
 
     public ScoreManager scoreManager;
 
-    public Pause pauseManager;
 
 
     // Interaktable svirtis
