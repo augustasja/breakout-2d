@@ -2,25 +2,40 @@
 
 public class Enemy : MonoBehaviour
 {
-    private GameObject player;
-    public float speed = 5f;
-    private Rigidbody2D rb;
+    public int maxHealth = 100;
+    public int currentHealth;
+
+    public Animator animator;
+
+    public ScoreManager scoreManager;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        currentHealth = maxHealth;
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    public void TakeDamage(int damage)
     {
-        var moveHorizontal = player.transform.position.x - transform.position.x;
-        var moveVertical = player.transform.position.y - transform.position.y;
-
-        var movement = new Vector2(moveHorizontal, moveVertical);
-        transform.LookAt(player.transform);
-
-        this.transform.position += transform.forward * speed * 0.5f * Time.deltaTime;
+        currentHealth -= damage;
+        animator.SetTrigger("Hurt");
+        
+        if(currentHealth <= 0)
+        {
+            Die();
+        }
     }
+
+    public void Die()
+    {
+        Debug.Log("Enemy died");
+
+        animator.SetBool("IsDead", true);
+
+        GetComponent<Collider2D>().enabled = false;
+        scoreManager.totalScore += (int)(maxHealth * 0.05);
+        Debug.Log("High Score: " + scoreManager.totalScore);
+        this.enabled = false;
+
+    }
+
 }

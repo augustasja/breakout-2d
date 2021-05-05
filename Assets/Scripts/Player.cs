@@ -19,6 +19,14 @@ public class Player : MonoBehaviour
     public ScoreManager scoreManager;
     public TextMeshProUGUI healthText;
 
+    public Transform attackPoint;
+    public float attackRange = 0.5f;
+    public LayerMask enemyLayer;
+    public int attackDamage = 50;
+    public float attackRate = 2f;
+    private float nextAttackTime = 0f;
+
+
     // Interaktable svirtis
     [SerializeField] GameObject interactIcon; // letter E
     private Vector2 boxSize = new Vector2(0.1f, 1f);
@@ -99,8 +107,11 @@ public class Player : MonoBehaviour
         //Attack
         else if (Input.GetMouseButtonDown(0))
         {
-            m_animator.SetTrigger("Attack");
-            _audioManager.PlaySound(_audioManager.Sword, transform.position);
+            if (Time.time >= nextAttackTime)
+            {
+                Attack();
+                nextAttackTime = Time.time + 1f / attackRate;
+            }
         }
 
         //Change between idle and combat idle
@@ -165,6 +176,29 @@ public class Player : MonoBehaviour
         // Tikriname ar paspaustas interaction mygtukas (E)
         if (Input.GetKeyDown(KeyCode.E))
             CheckInteraction();
+    }
+
+    public void Attack()
+    {
+        m_animator.SetTrigger("Attack");
+        _audioManager.PlaySound(_audioManager.Sword, transform.position);
+
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, 
+            enemyLayer);
+
+        foreach (var item in hitEnemies)
+        {
+            Debug.Log("hit " + item.name);
+
+            item.GetComponent<Enemy>().TakeDamage(attackDamage);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -237,6 +271,6 @@ public class Player : MonoBehaviour
 
     private void InvokeOnUpdateLives()
     {
-        onUpdateLives.Invoke(lives);
+        //onUpdateLives.Invoke(lives);
     }
 }

@@ -23,7 +23,6 @@ public class PrototypeHeroDemo : MonoBehaviour
     private int m_facingDirection = 1;
     private float m_disableMovementTimer = 0.0f;
     private bool m_inAir;
-    private float m_scoreMultiplier = 1;
 
 
     public ParticleSystem dust;

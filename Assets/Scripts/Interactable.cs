@@ -12,7 +12,6 @@ public abstract class Interactable : MonoBehaviour
 
     public abstract void Interact();
 
-
     /// <summary>
     /// Metodas tikrina ar zaidejas yra netoli interactable objekto
     /// jei taip - atisranda interactable icon
@@ -23,7 +22,7 @@ public abstract class Interactable : MonoBehaviour
         if (Colided != true)
         {
             if (collision.CompareTag("Player"))
-                collision.GetComponent<PrototypeHeroDemo>().OpenInteractableIcon();
+                collision.GetComponent<Player>().OpenInteractableIcon();
         }
     }
 
@@ -35,6 +34,6 @@ public abstract class Interactable : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
-            collision.GetComponent<PrototypeHeroDemo>().CloseInteractableIcon();
+            collision.GetComponent<Player>().CloseInteractableIcon();
     }
 }
