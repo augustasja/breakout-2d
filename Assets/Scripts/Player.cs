@@ -145,7 +145,7 @@ public class Player : MonoBehaviour
                 _audioManager.PlaySound(_audioManager.Jump, transform.position);
                 // Burning score for an extra jump.
                 var scoreToBurn = 1;
-                TakeDamage();
+                //TakeDamage();
 
                 scoreManager.ChangeScore(scoreToBurn, "-");
                 Debug.Log($"Coins burned: {scoreToBurn}");

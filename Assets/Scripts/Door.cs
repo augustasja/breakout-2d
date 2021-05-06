@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class Door : Interactable
@@ -8,6 +9,9 @@ public class Door : Interactable
 
     public bool openedDoors;
     private SpriteRenderer _spriteRenderer;
+
+    [SerializeField]
+    private UnityEvent onStopGame;
 
     private void Start()
     {
@@ -21,6 +25,7 @@ public class Door : Interactable
         {
             Debug.Log("Baigiamas lygis"); // Cia lygio pabaigos message
             openedDoors = !openedDoors;
+            onStopGame.Invoke();
         }
     }
 
