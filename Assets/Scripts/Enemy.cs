@@ -2,126 +2,134 @@
 
 public class Enemy : MonoBehaviour
 {
-    public int maxHealth = 100;
-    public int currentHealth;
+    [Header("Health, Score")]
+    public int MaxHealth = 100;
+    public int CurrentHealth;
+    public ScoreManager Score;
 
-    public Animator animator;
+    [Header("Animations, Movement")]
+    public Animator Animator;
+    public float Speed;
 
-    public ScoreManager scoreManager;
+    [Header("Attack")]
+    public int AttackDamage = 50;
+    public float AttackRate = 2f;
+    public Transform AttackPoint;
+    public float AttackRange = 0.5f;
+    public LayerMask PlayerMask;
+    private Transform _target;
+    public float GapToTarget = 1f;
+    private float _nextAttackTime = 0f;
+    public float TriggerDistance = 0f;
+    private float _lastTimeSeen;
 
-    public float speed;
-    private Transform target;
-
-
-    public bool mustPatrol;
-
-    public Rigidbody2D rb;
-
-    private bool mustTurn;
-
-    public Transform groundCheckpos;
-
-    public LayerMask groundLayer;
-
-    private Animator m_animator;
-
-    public LayerMask playerMask;
-
-    public int attackDamage = 50;
-    public float attackRate = 2f;
-    private float nextAttackTime = 0f;
-    public Transform attackPoint;
-    public float attackRange = 0.5f;
+    private Vector3 CharacterScale;
+    private float CharacterScaleX;
 
     void Start()
     {
-        currentHealth = maxHealth;
-        target = GameObject.FindGameObjectWithTag("Player")
+        CurrentHealth = MaxHealth;
+
+        // Declare the target.
+        _target = GameObject.FindGameObjectWithTag("Player")
             .GetComponent<Transform>();
-        mustPatrol = true;
+
+        // Character scale for turning the character sprite.
+        CharacterScale = transform.localScale;
+        CharacterScaleX = CharacterScale.x;
     }
 
     private void Update()
     {
-        transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        // Make the enemies move towards the player object.
+        var currentGapToTarget = Mathf.Abs(transform.position.x -
+            _target.position.x);
+        if (currentGapToTarget > GapToTarget 
+            && currentGapToTarget <= TriggerDistance)
+        {
+            transform.position = Vector2.MoveTowards(transform.position,
+                _target.position, Speed * Time.deltaTime);
+            Animator.SetInteger("AnimState", 2);
+            _lastTimeSeen = Time.time % 60;
+        }
+        else if(currentGapToTarget <= GapToTarget && !Player.m_isDead)
+        {
+            if (Time.time >= _nextAttackTime )
+            {
+                Attack();
+                _nextAttackTime = Time.time + 1f / AttackRate;
+            }
+            Animator.SetInteger("AnimState", 1);
+        }
+        else if((Time.time - _lastTimeSeen) >= 5f || Player.m_isDead ||
+             currentGapToTarget > GapToTarget)
+        {
+            Animator.SetInteger("AnimState", 0);
+        }
+
     }
 
     void FixedUpdate()
     {
-        if (transform.position.x > target.position.x)
-        {
-            transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
-        }
-        else if (transform.position.x < target.position.x)
-        {
-            transform.localScale = new Vector2(transform.localScale.x, transform.localScale.y);
-        }
+        // Flipping enemy sprite.
+        if (transform.position.x < _target.position.x)
+            CharacterScale.x = -CharacterScaleX;
+        else
+            CharacterScale.x = CharacterScaleX;
+
+        transform.localScale = CharacterScale;
     }
 
-    void Patrol()
-    {
-        if (mustTurn)
-        {
-            Flip();
-        }
-        transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-    }
-
-    void Flip()
-
-    {
-        mustPatrol = false;
-        transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
-        speed *= -1;
-        mustPatrol = true;
-
-    }
-
+    /// <summary>
+    /// Attack all the colliders who overlap within the AttackPoint range.
+    /// </summary>
     public void Attack()
     {
-        m_animator.SetTrigger("Attack");
+        Animator.SetTrigger("Attack");
 
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange,
-            playerMask);
+        Collider2D[] hitEnemies =
+            Physics2D.OverlapCircleAll(AttackPoint.position, AttackRange,
+            PlayerMask);
 
-        foreach (var item in hitEnemies)
+        // Damage every enemy hit.
+        foreach (var enemy in hitEnemies)
         {
-            Debug.Log("hit " + item.name);
-
-            item.GetComponent<Enemy>().TakeDamage(attackDamage);
+            Debug.Log("Hit: " + enemy.name);
+            enemy.GetComponent<Player>().TakeDamage();
         }
     }
 
+    /// <summary>
+    /// Draw a circle around the attack point to display its reach.
+    /// </summary>
     private void OnDrawGizmosSelected()
     {
-        if (attackPoint == null)
+        if (AttackPoint == null)
             return;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+
+        Gizmos.DrawWireSphere(AttackPoint.position, AttackRange);
     }
 
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        animator.SetTrigger("Hurt");
-        
-        if(currentHealth <= 0)
-        {
+        Animator.SetTrigger("Hurt");
+        CurrentHealth -= damage;
+
+        if (CurrentHealth <= 0)
             Die();
-        }
     }
 
     public void Die()
     {
-        Debug.Log("Enemy died");
-
-        animator.SetBool("IsDead", true);
+        Animator.SetBool("IsDead", true);
 
         GetComponent<Collider2D>().enabled = false;
-        scoreManager.totalScore += (int)(maxHealth * 0.05);
-        Debug.Log("High Score: " + scoreManager.totalScore);
-        this.enabled = false;
+        Score.totalScore += (int)(MaxHealth * 0.05);
+        enabled = false;
 
+        Debug.Log("Enemy died.");
+        Debug.Log("High Score: " + Score.totalScore);
     }
 
 }

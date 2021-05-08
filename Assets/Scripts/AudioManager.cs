@@ -18,6 +18,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip Land;
     public AudioClip Sword;
     public AudioClip Death;
+    public AudioClip PlayerHurt;
 
     AudioSource[] audioSources;
 

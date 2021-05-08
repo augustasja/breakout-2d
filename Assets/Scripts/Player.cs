@@ -87,25 +87,25 @@ public class Player : MonoBehaviour
 
         // -- Handle Animations --
         //Death
-        if (Input.GetKeyDown("r"))
-        {
-            if (!m_isDead)
-            {
-                m_animator.SetTrigger("Death");
-                _audioManager.PlaySound(_audioManager.Death, transform.position);
-            }
-            else
-                m_animator.SetTrigger("Recover");
+        //if (Input.GetKeyDown("r"))
+        //{
+        //    if (!m_isDead)
+        //    {
+        //        m_animator.SetTrigger("Death");
+        //        _audioManager.PlaySound(_audioManager.Death, transform.position);
+        //    }
+        //    else
+        //        m_animator.SetTrigger("Recover");
 
-            m_isDead = !m_isDead;
-        }
+        //    m_isDead = !m_isDead;
+        //}
 
         //Hurt
-        else if (Input.GetKeyDown("q"))
-            m_animator.SetTrigger("Hurt");
+        //else if (Input.GetKeyDown("q"))
+        //    m_animator.SetTrigger("Hurt");
 
         //Attack
-        else if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             if (Time.time >= nextAttackTime)
             {
@@ -119,15 +119,6 @@ public class Player : MonoBehaviour
             m_combatIdle = !m_combatIdle;
 
         //Jump
-        //else if (Input.GetKeyDown("space") && m_grounded)
-        //{
-        //    m_animator.SetTrigger("Jump");
-        //    m_grounded = false;
-        //    m_animator.SetBool("Grounded", m_grounded);
-        //    m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
-        //    m_groundSensor.Disable(0.2f);
-        //}
-
         else if (Input.GetKeyDown("space"))
         {
             if (m_grounded)
@@ -145,8 +136,6 @@ public class Player : MonoBehaviour
                 _audioManager.PlaySound(_audioManager.Jump, transform.position);
                 // Burning score for an extra jump.
                 var scoreToBurn = 1;
-                //TakeDamage();
-
                 scoreManager.ChangeScore(scoreToBurn, "-");
                 Debug.Log($"Coins burned: {scoreToBurn}");
                 // Performing jumping animations.
@@ -176,29 +165,6 @@ public class Player : MonoBehaviour
         // Tikriname ar paspaustas interaction mygtukas (E)
         if (Input.GetKeyDown(KeyCode.E))
             CheckInteraction();
-    }
-
-    public void Attack()
-    {
-        m_animator.SetTrigger("Attack");
-        _audioManager.PlaySound(_audioManager.Sword, transform.position);
-
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, 
-            enemyLayer);
-
-        foreach (var item in hitEnemies)
-        {
-            Debug.Log("hit " + item.name);
-
-            item.GetComponent<Enemy>().TakeDamage(attackDamage);
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (attackPoint == null)
-            return;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -251,19 +217,58 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Player object attack handling.
+    /// </summary>
+    public void Attack()
+    {
+        m_animator.SetTrigger("Attack");
+        _audioManager.PlaySound(_audioManager.Sword, transform.position);
+
+        Collider2D[] hitEnemies =
+            Physics2D.OverlapCircleAll(attackPoint.position, attackRange,
+            enemyLayer);
+
+        foreach (var item in hitEnemies)
+        {
+            Debug.Log("hit " + item.name);
+
+            item.GetComponent<Enemy>().TakeDamage(attackDamage);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
+    /// <summary>
+    /// Player object damage.
+    /// </summary>
     public void TakeDamage()
     {
-        Debug.Log("Taken damage");
         AddLives(-1);
+        Debug.Log("Taken damage: ");
         healthText.text = "x" + lives;
+        m_animator.SetTrigger("Hurt");
+        _audioManager.PlaySound(_audioManager.PlayerHurt,
+            transform.position);
+
         if (lives <= 0)
         {
             m_animator.SetTrigger("Death");
             _audioManager.PlaySound(_audioManager.Death, transform.position);
+            m_isDead = true;
             onStopGame.Invoke();
         }
     }
 
+    /// <summary>
+    /// Remove lives from object.
+    /// </summary>
+    /// <param name="x"></param>
     public void AddLives(int x)
     {
         lives += x;
